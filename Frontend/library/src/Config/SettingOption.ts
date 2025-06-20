@@ -101,6 +101,10 @@ export class SettingOption<
      * @param value Selected option
      */
     public set selected(value: string) {
+        if (value === undefined) {
+            console.trace("SettingOption - selected, call stack trace");
+        }
+        
         // A user may not specify the full possible value so we instead use the closest match.
         // eg ?xxx=H264 would select 'H264 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001f'
         let filteredList = this.options.filter(
