@@ -3,6 +3,8 @@
 import type { OptionParametersIds } from './Config';
 import { SettingBase } from './SettingBase';
 
+import { Logger } from '../Logger/Logger';
+
 /**
  * An Option setting object with a text label. Allows you to specify an array of options and select one of them.
  */
@@ -105,8 +107,11 @@ export class SettingOption<
             console.trace("SettingOption - selected, call stack trace");
         }
         
-        console.log("setting options", this);
-        console.log("options", this.options);
+        Logger.Log(
+            Logger.GetStackTrace(),
+            `Options: ${JSON.stringify(this.options)}`,
+            7
+        );
         
         // A user may not specify the full possible value so we instead use the closest match.
         // eg ?xxx=H264 would select 'H264 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001f'
@@ -123,7 +128,11 @@ export class SettingOption<
         filteredList = this.options.filter(
             (option: string) => option.indexOf(value?.split(' ')[0] ?? '') !== -1
         );
-        console.log("filtered list", filteredList);
+        Logger.Log(
+            Logger.GetStackTrace(),
+            `Filtered List: ${JSON.stringify(filteredList)}`,
+            7
+        );
         if (filteredList.length) {
             this.value = filteredList[0];
             return;
