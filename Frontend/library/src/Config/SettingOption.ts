@@ -105,6 +105,9 @@ export class SettingOption<
             console.trace("SettingOption - selected, call stack trace");
         }
         
+        console.log("setting options", this);
+        console.log("options", this.options);
+        
         // A user may not specify the full possible value so we instead use the closest match.
         // eg ?xxx=H264 would select 'H264 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001f'
         let filteredList = this.options.filter(
@@ -120,6 +123,7 @@ export class SettingOption<
         filteredList = this.options.filter(
             (option: string) => option.indexOf(value?.split(' ')[0] ?? '') !== -1
         );
+        console.log("filtered list", filteredList);
         if (filteredList.length) {
             this.value = filteredList[0];
             return;
